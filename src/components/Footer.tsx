@@ -1,26 +1,38 @@
 import { Link } from 'react-router'
 
 /**
- * Footer (design.md §5.2). Top hairline, three zones: wordmark + exit line,
- * compliance line, nav repeat + data source attribution.
+ * Footer (design.md v2 §5). Register-invariant IGNIISE INK band (#123D2F):
+ * the closing dark surface on both registers, and the fixed home of the
+ * white logo assets. Paper text, muted paper metadata, hairlines in
+ * paper at 18% alpha.
  */
 export default function Footer() {
   return (
-    <footer className="border-t border-hairline">
-      <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-10 px-5 py-10 md:px-8 lg:grid-cols-3 lg:gap-8">
+    <footer className="on-ink bg-[#123D2F] text-[#F2F0EB]">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-10 px-5 py-12 md:px-8 lg:grid-cols-3 lg:gap-8">
         <div>
-          <p className="font-sans text-[15px] font-semibold tracking-[-0.01em] text-primary">
-            igniise{' '}
-            <span className="font-mono text-[11px] font-normal text-secondary">
-              terminal
-            </span>
-          </p>
-          <p className="mt-3 font-sans text-[13px] leading-[1.65] text-secondary">
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo-mark.png"
+              alt=""
+              className="logo-white h-8 w-8"
+              width={32}
+              height={32}
+            />
+            <img
+              src="/logo-wordmark.png"
+              alt="igniise"
+              className="logo-white h-[18px] w-auto"
+              height={18}
+            />
+            <span className="font-mono text-[11px] text-[#F2F0EB]/60">terminal</span>
+          </div>
+          <p className="mt-4 font-sans text-[13px] leading-[1.65] text-[#F2F0EB]/75">
             igniise is an independent intelligence practice.
           </p>
         </div>
 
-        <p className="max-w-[52ch] font-mono text-[10.5px] leading-[1.7] text-muted">
+        <p className="max-w-[52ch] font-mono text-[10.5px] leading-[1.7] text-[#F2F0EB]/55">
           Igniise publishes cross-venue pricing observations for informational
           purposes. Nothing on this site constitutes investment advice, a
           solicitation, or an offer to transact in event contracts.
@@ -32,7 +44,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/"
-                  className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted transition-colors duration-150 hover:text-secondary"
+                  className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#F2F0EB]/60 transition-colors duration-150 hover:text-[#F2F0EB]"
                 >
                   Manifesto
                 </Link>
@@ -40,7 +52,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/terminal"
-                  className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted transition-colors duration-150 hover:text-secondary"
+                  className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#F2F0EB]/60 transition-colors duration-150 hover:text-[#F2F0EB]"
                 >
                   Terminal
                 </Link>
@@ -48,14 +60,14 @@ export default function Footer() {
               <li>
                 <Link
                   to="/methodology"
-                  className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted transition-colors duration-150 hover:text-secondary"
+                  className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#F2F0EB]/60 transition-colors duration-150 hover:text-[#F2F0EB]"
                 >
                   Methodology
                 </Link>
               </li>
             </ul>
           </nav>
-          <p className="font-mono text-[10.5px] text-muted">
+          <p className="font-mono text-[10.5px] text-[#F2F0EB]/45">
             Data sources: Polymarket, Kalshi
           </p>
         </div>

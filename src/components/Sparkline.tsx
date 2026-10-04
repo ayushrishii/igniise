@@ -30,7 +30,10 @@ function SparklineInner({
     .map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(2)},${p.y.toFixed(2)}`)
     .join(' ')
   const last = pts[pts.length - 1]
-  const stroke = spread >= 7.0 ? '#C9963F' : '#A39C8E'
+  const stroke =
+    spread >= 7.0
+      ? 'rgb(var(--c-wide))'
+      : 'rgb(var(--c-secondary))'
 
   return (
     <svg

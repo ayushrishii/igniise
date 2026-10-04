@@ -12,9 +12,12 @@ const NAV = [
 ]
 
 /**
- * TopBar (design.md §5.1). 64px, bg-base, bottom hairline, sticky in normal
- * flow. Gains bg-base/92 + backdrop-blur-sm after 24px of scroll, 200ms
- * transition, never hides. Staleness readout appears on the terminal only.
+ * TopBar (design.md v2 §5). 64px, register background, bottom hairline,
+ * sticky in normal flow. Gains bg-base/92 + backdrop-blur-sm after 24px
+ * of scroll. Brand block is the uploaded igniise mark + wordmark: ink
+ * assets on paper, white assets in the terminal register (pure CSS swap,
+ * see .logo-ink / .logo-white in index.css). Staleness readout appears
+ * on the terminal only.
  */
 export default function TopBar() {
   const [scrolled, setScrolled] = useState(false)
@@ -41,12 +44,37 @@ export default function TopBar() {
       )}
     >
       <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-5 md:px-8">
-        <Link to="/" className="flex items-center gap-3">
-          <span className="font-sans text-[15px] font-semibold tracking-[-0.01em] text-primary">
-            igniise
+        <Link to="/" className="flex items-center gap-3" aria-label="igniise terminal home">
+          <img
+            src="/logo-mark-ink.png"
+            alt=""
+            className="logo-ink h-7 w-7"
+            width={28}
+            height={28}
+          />
+          <img
+            src="/logo-mark.png"
+            alt=""
+            className="logo-white h-7 w-7"
+            width={28}
+            height={28}
+          />
+          <span className="flex items-baseline gap-2">
+            <img
+              src="/logo-wordmark-ink.png"
+              alt="igniise"
+              className="logo-ink h-[15px] w-auto"
+              height={15}
+            />
+            <img
+              src="/logo-wordmark.png"
+              alt="igniise"
+              className="logo-white h-[15px] w-auto"
+              height={15}
+            />
+            <span aria-hidden className="h-4 w-px translate-y-[2px] bg-hairline-strong" />
+            <span className="font-mono text-[11px] text-secondary">terminal</span>
           </span>
-          <span aria-hidden className="h-4 w-px bg-hairline-strong" />
-          <span className="font-mono text-[11px] text-secondary">terminal</span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">

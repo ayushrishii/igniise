@@ -7,16 +7,25 @@ import Footer from './Footer'
  * Shared layout. Uses the nested-route pattern: Layout renders <Outlet/>,
  * App.tsx mounts it as a layout route with nested <Route>s. Never mix
  * with the children pattern.
+ *
+ * The route picks the register (design.md v2 §2): /terminal renders in
+ * the TERMINAL register, everything else in PAPER. The attribute flips
+ * every CSS-variable-backed token below it; components keep their
+ * semantic class names unchanged.
  */
 export default function Layout() {
   const { pathname } = useLocation()
+  const register = pathname.startsWith('/terminal') ? 'terminal' : 'paper'
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-base">
+    <div
+      className="app-shell flex min-h-[100dvh] flex-col bg-base"
+      data-register={register}
+    >
       <TopBar />
       <main className="flex-1">
         <Outlet />
