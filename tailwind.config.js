@@ -5,60 +5,63 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // igniise design tokens (design.md §2). Warm off-black family, locked dark.
-        base: '#0E0D0B',
-        raised: '#151310',
-        inset: '#0A0908',
+        // igniise design tokens v2 (design.md §2). Two registers, one brand:
+        // PAPER on :root, TERMINAL under [data-register='terminal']. All
+        // semantic colors are CSS-variable backed; Layout sets the register.
+        base: 'rgb(var(--c-base) / <alpha-value>)',
+        raised: 'rgb(var(--c-raised) / <alpha-value>)',
+        inset: 'rgb(var(--c-inset) / <alpha-value>)',
         hairline: {
-          DEFAULT: '#26231E',
-          strong: '#3A352D',
+          DEFAULT: 'rgb(var(--c-hairline) / <alpha-value>)',
+          strong: 'rgb(var(--c-hairline-strong) / <alpha-value>)',
         },
-        sage: '#7A8B6F',
-        // shadcn semantic slots remapped onto the design palette
-        border: '#26231E',
-        input: '#26231E',
-        ring: '#C9963F',
-        background: '#0E0D0B',
-        foreground: '#EDEAE3',
+        sage: 'rgb(var(--c-sage) / <alpha-value>)',
+        wide: 'rgb(var(--c-wide) / <alpha-value>)',
+        // shadcn semantic slots remapped onto the register tokens
+        border: 'rgb(var(--c-hairline) / <alpha-value>)',
+        input: 'rgb(var(--c-hairline) / <alpha-value>)',
+        ring: 'rgb(var(--c-ring) / <alpha-value>)',
+        background: 'rgb(var(--c-base) / <alpha-value>)',
+        foreground: 'rgb(var(--c-primary) / <alpha-value>)',
         primary: {
-          DEFAULT: '#EDEAE3',
-          foreground: '#141009',
+          DEFAULT: 'rgb(var(--c-primary) / <alpha-value>)',
+          foreground: 'rgb(var(--c-primary-fg) / <alpha-value>)',
         },
         secondary: {
-          DEFAULT: '#A39C8E',
-          foreground: '#EDEAE3',
+          DEFAULT: 'rgb(var(--c-secondary) / <alpha-value>)',
+          foreground: 'rgb(var(--c-primary) / <alpha-value>)',
         },
         muted: {
-          DEFAULT: '#615C52',
-          foreground: '#615C52',
+          DEFAULT: 'rgb(var(--c-muted) / <alpha-value>)',
+          foreground: 'rgb(var(--c-muted) / <alpha-value>)',
         },
         accent: {
-          DEFAULT: '#C9963F',
-          dim: '#8A6B36',
-          ink: '#141009',
-          foreground: '#141009',
+          DEFAULT: 'rgb(var(--c-accent) / <alpha-value>)',
+          dim: 'rgb(var(--c-accent-dim) / <alpha-value>)',
+          ink: 'rgb(var(--c-accent-ink) / <alpha-value>)',
+          foreground: 'rgb(var(--c-accent-ink) / <alpha-value>)',
         },
         destructive: {
-          DEFAULT: '#8C3B2E',
-          foreground: '#EDEAE3',
+          DEFAULT: 'rgb(var(--c-destructive) / <alpha-value>)',
+          foreground: 'rgb(var(--c-destructive-fg) / <alpha-value>)',
         },
         popover: {
-          DEFAULT: '#151310',
-          foreground: '#EDEAE3',
+          DEFAULT: 'rgb(var(--c-popover) / <alpha-value>)',
+          foreground: 'rgb(var(--c-popover-fg) / <alpha-value>)',
         },
         card: {
-          DEFAULT: '#151310',
-          foreground: '#EDEAE3',
+          DEFAULT: 'rgb(var(--c-card) / <alpha-value>)',
+          foreground: 'rgb(var(--c-card-fg) / <alpha-value>)',
         },
         sidebar: {
-          DEFAULT: '#0E0D0B',
-          foreground: '#EDEAE3',
-          primary: '#C9963F',
-          'primary-foreground': '#141009',
-          accent: '#151310',
-          'accent-foreground': '#EDEAE3',
-          border: '#26231E',
-          ring: '#C9963F',
+          DEFAULT: 'rgb(var(--c-base) / <alpha-value>)',
+          foreground: 'rgb(var(--c-primary) / <alpha-value>)',
+          primary: 'rgb(var(--c-accent) / <alpha-value>)',
+          'primary-foreground': 'rgb(var(--c-accent-ink) / <alpha-value>)',
+          accent: 'rgb(var(--c-raised) / <alpha-value>)',
+          'accent-foreground': 'rgb(var(--c-primary) / <alpha-value>)',
+          border: 'rgb(var(--c-hairline) / <alpha-value>)',
+          ring: 'rgb(var(--c-ring) / <alpha-value>)',
         },
       },
       fontFamily: {
