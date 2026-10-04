@@ -1,0 +1,220 @@
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource/geist/400.css';
+@import '@fontsource/geist/500.css';
+@import '@fontsource/geist/600.css';
+@import '@fontsource/geist-mono/400.css';
+@import '@fontsource/geist-mono/500.css';
+@import '@fontsource/geist-mono/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   igniise registers (design.md v2 §2). PAPER on :root, TERMINAL under
+   [data-register='terminal']. Layout sets the attribute from the route.
+   --------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --c-base: 239 237 233;            /* #EFEDE9 paper */
+  --c-raised: 245 243 239;          /* #F5F3EF */
+  --c-inset: 232 229 222;           /* #E8E5DE */
+  --c-hairline: 212 209 199;        /* #D4D1C7 */
+  --c-hairline-strong: 186 182 170; /* #BAB6A9 */
+  --c-primary: 18 61 47;            /* #123D2F ink */
+  --c-primary-fg: 239 237 233;
+  --c-secondary: 82 79 70;          /* #524F46 body */
+  --c-muted: 110 106 93;            /* #6E6A5D metadata */
+  --c-accent: 18 61 47;             /* ink is the interactive accent */
+  --c-accent-hover: 27 75 58;       /* #1B4B3A */
+  --c-accent-dim: 63 96 83;         /* #3F6053 */
+  --c-accent-ink: 242 240 235;      /* text on accent fill */
+  --c-ring: 18 61 47;
+  --c-sage: 95 122 102;             /* #5F7A66 verified marker */
+  --c-wide: 168 104 28;             /* #A8681C wide-spread signal */
+  --c-destructive: 156 61 46;       /* #9C3D2E */
+  --c-destructive-fg: 245 243 239;
+  --c-popover: 245 243 239;
+  --c-popover-fg: 18 61 47;
+  --c-card: 245 243 239;
+  --c-card-fg: 18 61 47;
+
+  /* fixed brand surfaces (register-invariant) */
+  --ink: #123d2f;
+  --ink-deep: #0d2f24;
+  --paper-on-ink: #f2f0eb;
+}
+
+[data-register='terminal'] {
+  color-scheme: dark;
+
+  --c-base: 11 13 12;               /* #0B0D0C */
+  --c-raised: 18 21 20;             /* #121514 */
+  --c-inset: 7 9 8;                 /* #070908 */
+  --c-hairline: 35 39 36;           /* #232724 */
+  --c-hairline-strong: 53 59 54;    /* #353B36 */
+  --c-primary: 233 235 228;         /* #E9EBE4 bone */
+  --c-primary-fg: 11 13 12;
+  --c-secondary: 154 160 152;       /* #9AA098 */
+  --c-muted: 99 105 98;             /* #63695F */
+  --c-accent: 133 173 138;          /* #85AD8A */
+  --c-accent-dim: 79 105 84;        /* #4F6954 */
+  --c-accent-ink: 9 13 11;
+  --c-ring: 133 173 138;
+  --c-sage: 139 155 126;            /* #8B9B7E */
+  --c-wide: 217 166 72;             /* #D9A648 */
+  --c-destructive: 176 86 74;       /* #B0564A */
+  --c-destructive-fg: 245 243 239;
+  --c-popover: 18 21 20;
+  --c-popover-fg: 233 235 228;
+  --c-card: 18 21 20;
+  --c-card-fg: 233 235 228;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply bg-base;
+  }
+
+  body {
+    @apply bg-base text-primary font-sans antialiased;
+    font-feature-settings: "ss01" 0;
+  }
+
+  /* Data mono: tabular numerals forced everywhere (design.md §3) */
+  .font-mono {
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Focus rings: 1px accent outline, 2px offset. Never removed (design.md §2) */
+  *:focus-visible {
+    outline: 1px solid rgb(var(--c-ring));
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgb(var(--c-accent) / 0.18);
+    color: rgb(var(--c-primary));
+  }
+
+
+
+  @keyframes live-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  @keyframes ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Live-status dot: 2.4s opacity pulse, stops under reduced motion (design.md §6) */
+  .live-dot {
+    animation: live-pulse 2.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot {
+      animation: none;
+    }
+    .ticker-track {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+}
+
+@layer components {
+  /* Logo swap. White assets belong on ink or terminal-dark surfaces;
+     ink assets belong on paper. Keyed off the nearest register or .on-ink. */
+  .logo-white {
+    display: none;
+  }
+  [data-register='terminal'] .logo-white,
+  .on-ink .logo-white {
+    display: block;
+  }
+  [data-register='terminal'] .logo-ink,
+  .on-ink .logo-ink {
+    display: none;
+  }
+
+  /* Grain overlay: fixed full-viewport, fractal noise, 5% multiply on paper,
+     3.5% overlay on the terminal register, z-grain, never on scrolling
+     containers. Lives on the Layout shell so it can read the register. */
+  .app-shell::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .app-shell[data-register='terminal']::after {
+    mix-blend-mode: overlay;
+    opacity: 0.035;
+  }
+
+  /* Diagram node hover: tooltip chip shows the node's real terminal
+     counterpart (home interactions summary) */
+  .dg-node .dg-tip {
+    opacity: 0;
+    transition: opacity 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .dg-node:hover .dg-tip {
+    opacity: 1;
+  }
+
+  /* Mechanism pinned layout: applies only where the pinned sequence runs.
+     Outside it (mobile, reduced motion) stages stack statically. */
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .mech-wrap {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .mech-stages {
+      position: relative;
+      height: 460px;
+    }
+    .mech-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .mech-stage[data-stage='2'],
+    .mech-stage[data-stage='3'] {
+      opacity: 0;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
